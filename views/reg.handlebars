@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h3 class="center">Registration numbers</h3>
+      </div>
+    </div>
+    <div class="row">
+
+      <form class="" action="reg_numbers" method="post">
+
+        <div class="col-12 ofText">
+          Enter registration number:
+          <input class="textInput" type="text" name="text" value="" placeholder="eg. CA 465-647" maxlength="12" required>
+          <button class="waves-effect waves-light btn" type="submit" name="add">Add</button>
+          <button class="waves-effect waves-light btn" type="submit" name="reset"><a href = "/reset" class="white">Reset</a></button>
+
+        </div>
+    </div>
+    <div class="row">
+      <div>
+        <div class="col-12 ofdropdown">
+          <div class="dropdown" name="dropdown">
+            <h6>Select your Town</h6>
+            <a class='dropdown-trigger btn' href='' data-target='dropdown1'>All Towns</a>
+
+            <ul id='dropdown1' class='dropdown-content' disabled selected>
+              <li><a href="/all">All Towns</a></li>
+              <li><a href="/CA ">Cape Town</a></li>
+              <li><a href="/CL">Stellenbosch</a></li>
+              <li><a href="/CEY">Strand</a></li>
+              <li><a href="/CJ">Paarl</a></li>
+
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    </form>
+
+    <div class="col-12 alert"></div>
+    <div class="row ofDisplay collection">
+      <ul>
+        <li class="col-12 display1 collection-item" id="displayMaaan">{{displayRegs}}</li>
+
+      </ul>
+    </div>
+  </div>
+
+
+</body>
+
+</html>
