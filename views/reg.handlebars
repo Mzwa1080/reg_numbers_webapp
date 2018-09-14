@@ -15,7 +15,7 @@
 
         <div class="col-12 ofText">
           Enter registration number:
-          <input class="textInput" type="text" name="text" value="" placeholder="eg. CA 465-647" maxlength="12" required>
+          <input class="textInput" type="text" name="text" value="" placeholder="eg. CA 465-647" maxlength="12" >
           <button class="waves-effect waves-light btn" type="submit" name="add">Add</button>
           <button class="waves-effect waves-light btn" type="submit" name="reset"><a href = "/reset" class="white">Reset</a></button>
 
@@ -44,12 +44,16 @@
     </form>
 
     <div class="col-12 alert"></div>
-    <div class="row ofDisplay collection">
-      <ul>
-        <li class="col-12 display1 collection-item" id="displayMaaan">{{displayRegs}}</li>
+    <div class="row ofDisplay ">
 
-      </ul>
+        <div class="col 12 display1" id="displayMaaan">{{displayRegs}}</div>
+
     </div>
+    {{#if messages.info}}
+    <div class="col-12 flash">
+        <span href = "" name= "flash">{{messages.info}}</span>
+    </div>
+    {{/if}}
   </div>
 
 
