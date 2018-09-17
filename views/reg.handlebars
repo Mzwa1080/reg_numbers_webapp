@@ -29,12 +29,13 @@
             <a class='dropdown-trigger btn' href='' data-target='dropdown1'>All Towns</a>
 
             <ul id='dropdown1' class='dropdown-content' disabled selected>
+
               <li><a href="/all">All Towns</a></li>
               <li><a href="/CA ">Cape Town</a></li>
               <li><a href="/CL">Stellenbosch</a></li>
               <li><a href="/CEY">Strand</a></li>
               <li><a href="/CJ">Paarl</a></li>
-
+              <li><a href="/CY">Bellville</a></li>
             </ul>
           </div>
         </div>
@@ -43,22 +44,16 @@
 
     </form>
 
-    <div class="col-12 alert"></div>
     <div class="row ofDisplay ">
       <ul>
         <li class="col 12 display1">{{displayRegs}}</li>
       </ul>
-        <div ></div>
 
     </div>
-    {{#if messages.info}}
-    <div class="col-12 flash">
-        <span href = "" name= "flash">{{messages.info}}</span>
-    </div>
-    {{/if}}
+
+
   </div>
-
-
+  
 </body>
 
 </html>

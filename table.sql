@@ -1,13 +1,13 @@
 drop table if exists towns;
---
+
 create table towns (
   id serial not null primary key,
   town_name varchar(50) not null
 );
---
-drop table if exists reg_numbers;
 
-create table reg_numbers(
+drop table if exists reg_nums;
+
+create table reg_nums(
   id serial not null primary key,
   towns_id serial not null,
   registration_num text not null varchar(50),
