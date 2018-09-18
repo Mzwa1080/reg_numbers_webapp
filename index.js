@@ -11,54 +11,96 @@ let regNumber = require('./regNUmbers');
 let app = express();
 
 app.use(session({
-    secret: 'This line is to display an error message',
-    resave: false,
-    saveUninitialized: true
+  secret: 'This line is to display an error message',
+  resave: false,
+  saveUninitialized: true
 }));
 
 app.use(flash());
 //----------FOR SENDING DATA AS A FORM TO THE SERVER!!! -------
 // parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({
+  extended: false
+}));
 // parse application/json
 app.use(bodyParser.json());
 //for public folder #Static_Resource!!!
 app.use(express.static('public'));
 
-app.engine('handlebars', expressHandlebars({defaultLayout: 'links'}));
+app.engine('handlebars', expressHandlebars({
+  defaultLayout: 'links'
+}));
 app.set('view engine', 'handlebars');
+let useSSL = false;
+if (process.env.DATABASE_URL) {
+  useSSL = true;
+}
 
-let regNumberInstance = regNumber();
+const connectionString = process.env.DATABASE_URL ||
+  "postgresql://coder:coder123@localhost:5432/reg_numbers";
 
-app.get('/', function(req, res){
-  // displayRegs:regNumberInstance.forRegMap();
-
-  res.render('reg', {displayRegs:regNumberInstance.forRegMap()});
+const pool = new Pool({
+  connectionString,
+  ssl: useSSL
 });
 
-app.post('/reg_numbers', function(req, res){
+let regNumberInstance = regNumber(pool);
+
+app.get('/', async function(req, res, next) {
+  try {
+    // let displayRegs = await regNumberInstance.regMap();
+    res.render('reg', {
+      regDisplay: await regNumberInstance.regMap()
+    });
+
+  } catch (err) {
+    next(err);
+  }
+
+});
+
+app.post('/reg_numbers', async function(req, res, next) {
+  try {
     let textInput = req.body.text;
-    let dropDownCheck = req.body.dropdown;
+    await regNumberInstance.inputReg(textInput);
 
-    let displayRegs =regNumberInstance.inputReg(textInput);
-    let dropdown = regNumberInstance.forFiltering(dropDownCheck);
+    res.redirect('/');
 
-  res.render('reg', {displayRegs,dropdown}) });
+  } catch (err) {
+    next(err);
+  }
 
-app.get('/:towns', function(req, res){
+});
+
+app.get('/:towns', async function(req, res, next) {
+  try {
+
     let town = req.params.towns;
-    // console.log(town);	    // console.log(town);
-    res.render('reg', {displayRegs:regNumberInstance.forFiltering(town)} )
-  	})
+    // console.log(town);
+    res.render('reg', {
+      regDisplay: await regNumberInstance.forFiltering(town)
+    })
 
-app.get('/reset', function(req, res){
+  } catch (err) {
+    next(err);
+  }
+});
 
-  // console.log(  regNumberInstance.reset()	);
-  res.render('reg', {displayRegs:regNumberInstance.reset()});
-})
+app.get('/reset', async function(req, res, next){
+  try {
+    await regNumberInstance.reset();
+    res.render('reg');
+
+  }
+
+  catch (err) {
+    next(err);
+  }
+
+});
 
 
 let PORT = process.env.PORT || 3999;
-app.listen(PORT, function(){
-  	console.log('App starting on port', PORT);
+app.listen(PORT, function() {
+  console.log('App starting on port', PORT);
 });

@@ -1,59 +1,49 @@
-module.exports = function () {
-  var allRegs =  {};
-  var valid = ["all", "CA", "CEY", "CL", "CJ"];
-  var reg = '';
-  // ca 1235
-  function inputReg(regNumber) {
-  if(allRegs[regNumber] !== ""){
-    if(allRegs[regNumber] == undefined){
-      let tag = regNumber.substring(0,3).trim();
-       if (valid.includes(tag)) {
-        //update reg and add to the maP
-        allRegs[regNumber] = 0;
-        return Object.keys(allRegs);
-      }
+module.exports = function(pool) {
+
+  async function inputReg(regNumber) {
+    // entry validation
+    if (!regNumber || regNumber == "") {
+      return false;
     }
-    return "ENTER ANOTHER ONE!";
-   }
-}
-   function forRegMap() {
-    return Object.keys(allRegs);
+    regNumber = regNumber.toUpperCase();
+    let tag = regNumber.substring(0, 2).trim();
+
+    // check if this is a valid town
+    let foundTown = await pool.query("select id from towns where town_tag=$1", [tag]);
+    if (foundTown.rowCount === 0) {
+      return "Town does not exist!";
+    }
+
+    await pool.query('insert into reg_nums(towns_id,registration_num) values($1,$2)', [foundTown.rows[0].id, regNumber]);
   }
 
-  function returnAll(){
-    if(allRegs === ""){
-      return Object.keys(allRegs);
-    }
-    else if(allRegs !== ""){
-      return allRegs;
-    }
-  }
-   function forIndividual(){
-    return reg;
+  async function regMap() {
+    let allRegs = await pool.query("select registration_num from reg_nums");
+    return allRegs.rows;
   }
 
-   function forFiltering(selectedTown) {
-    var registrations = Object.keys(allRegs);
-    if (selectedTown !== "All") {
-      return registrations.filter(current => current.startsWith(selectedTown));
+  async function forFiltering(tag){
+    let result = {};
+
+    if (tag == "" || tag ==undefined) {
+      result = await pool.query("select registration_num from reg_nums");
     }
-    return registrations;
+
+    result = await pool.query("select registration_num from towns join reg_nums on reg_nums.towns_id=towns.id where town_tag=$1",[tag]);
+    console.log(result.rows);
+    return result.rows;
   }
 
-  function reset(){
-   let allRegs = {};
-   let reg = "";
-   registrations = "";
+  async function reset() {
+    let clear = await pool.query("delete from reg_nums");
+    return clear.rowCount;
+    console.log(clear.rowCount);
+  }
 
- }
-
-   return {
+  return {
     inputReg,
-    forIndividual,
-    //forRegNumber,
-    forRegMap,
-    returnAll,
-    // returnAll,
+    regMap,
+    reset,
     forFiltering
   }
 }
