@@ -64,6 +64,9 @@ app.post('/reg_numbers', async function(req, res, next) {
     let textInput = req.body.text;
     await regNumberInstance.inputReg(textInput);
 
+    if (textInput == "" || textInput == undefined) {
+      req.flash("info", "Please insert a valid registration once!");
+    }
     res.redirect('/');
 
   } catch (err) {
@@ -71,7 +74,6 @@ app.post('/reg_numbers', async function(req, res, next) {
   }
 
 });
-
 app.get('/:towns', async function(req, res, next) {
   try {
 
@@ -86,21 +88,18 @@ app.get('/:towns', async function(req, res, next) {
   }
 });
 
-app.get('/reset', async function(req, res, next){
+app.get('/reg_numbers/reset', async function(req, res, next) {
   try {
     await regNumberInstance.reset();
-    res.render('reg');
+    res.redirect('/');
 
-  }
-
-  catch (err) {
+  } catch (err) {
     next(err);
   }
 
 });
 
-
-let PORT = process.env.PORT || 3999;
+let PORT = process.env.PORT || 3030;
 app.listen(PORT, function() {
   console.log('App starting on port', PORT);
 });

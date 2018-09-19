@@ -11,26 +11,29 @@
     </div>
     <div class="row">
 
-      <form class="" action="reg_numbers" method="post">
+      <form class="" action="/reg_numbers" method="post">
 
-        <div class="col-12 ofText">
+        <div class="col s12 ofText">
           Enter registration number:
-          <input class="textInput" type="text" name="text" value="" placeholder="eg. CA 465-647" maxlength="12" >
-          <button class="waves-effect waves-light btn" type="submit" name="add">Add</button>
-          <button class="waves-effect waves-light btn" type="submit" name="reset"><a href = "/reset" class="white">Reset</a></button>
+          <input class="textInput col 12" type="text" name="text" value="" placeholder="eg. CA 465-647" maxlength="11">
 
+          <div class="row">
+
+            <button class="waves-effect waves-light btn col s6 center btnWidth" type="submit" name="add">Add</button>
+            <a href="/reg_numbers/reset" class="waves-effect waves-light btn col s6 center btnWidth" type="" name="reset">Reset</a>
+          </div>
         </div>
     </div>
     <div class="row">
-      <div>
-        <div class="col-12 ofdropdown">
+
+        <div class=" ofdropdown">
           <div class="dropdown" name="dropdown">
-            <h6>Select your Town</h6>
-            <a class='dropdown-trigger btn' href='' data-target='dropdown1'>All Towns</a>
+            <h6 class="center">Select your Town</h6>
+            <a class='dropdown-trigger btn center col s12' href='' data-target='dropdown1'>All Towns</a>
 
             <ul id='dropdown1' class='dropdown-content' disabled selected>
 
-              <li><a href="/all">All Towns</a></li>
+              <li><a href="/All">All Towns</a></li>
               <li><a href="/CA ">Cape Town</a></li>
               <li><a href="/CL">Stellenbosch</a></li>
               <li><a href="/CEY">Strand</a></li>
@@ -39,20 +42,26 @@
             </ul>
           </div>
         </div>
-      </div>
+
     </div>
 
     </form>
 
     <div class="row ofDisplay ">
-      <ul class="display1">
+      <ul class="">
         {{#each regDisplay}}
-        <div class="col 12 display1">{{registration_num}}</div>
+          <div class="col 12 display1">{{registration_num}}</div>
         {{/each}}
       </ul>
 
     </div>
 
+    {{#if messages.info}}
+      <div class="col 12">
+        <h5 href="/flash" name="flash" class="error">{{messages.info}}</h5>
+      </div>
+    {{/if}}
+  </div>
 
   </div>
 
