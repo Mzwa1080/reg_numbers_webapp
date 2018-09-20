@@ -1,0 +1,16 @@
+language: node_js
+
+env:
+     - DB=postgresql://postgres@localhost:5432/reg_number_test
+
+node_js:
+   - "8.9.4"
+
+before_script:
+  - psql -c 'create database reg_number_test;' -U postgres
+  - psql -U postgres -d reg_number_test -a -f table.sql
+
+addons:
+    apt:
+    packages:
+    - postgresql-server-dev-9.2
