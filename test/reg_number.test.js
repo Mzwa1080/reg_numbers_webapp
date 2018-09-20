@@ -11,19 +11,32 @@ const pool = new Pool({
 });
 
 describe('The Registration Number Web App', async function(){
-
-    // beforeEach(async function(){
-    //     // clean the tables before each test run
-    //     await pool.query("delete from users;");
-    // });
+    const reg = Reg_number(pool);
 
     it('should pass if there\'s no registration number in the registration_num column/map', async function(){
+        // the Factory Function is called Reg_number;
+        assert.equal("Enter registration number once!",  await reg.inputReg());
+    });
 
-        // the Factory Function is called Reg_number
-        let reg = Reg_number(pool);
-        await reg.inputReg();
-        // let count = await reg.greetCounter();
-        assert.equal(0, await reg.regMap());
+    beforeEach(async function(){
+        // clean the tables before each test run
+        await pool.query("delete from reg_nums;");
+    });
+
+    it('should RETURN ALL registration numbers in the reg_numbers database', async function(){
+
+        await reg.inputReg('CA 123-123');
+        await reg.inputReg('CY 223-223');
+        await reg.inputReg('CEY 231-231');
+        await reg.inputReg('CL 992-992');
+
+        // console.log(await reg.inputReg('CA 123-123'));
+        assert.deepEqual(await reg.regMap(), [
+              {"registration_num": "CA 123-123"},
+              {"registration_num": "CY 223-223"},
+              {"registration_num": "CEY 231-231"},
+              {"registration_num": "CL 992-992"}
+           ]);
 
     });
 
@@ -32,20 +45,56 @@ describe('The Registration Number Web App', async function(){
         await pool.query("delete from reg_nums;");
     });
 
-    it('should pass if there\'s CA registration number in the map', async function(){
+    it('should return the Filtered Bellville Registration Numbers', async function(){
 
-        // the Factory Function is called Reg_number
-        let reg = Reg_number(pool);
-        await reg.inputReg('CA 123-123');
+      await reg.inputReg("CA 123-123");
+      await reg.inputReg("CY 098-765");
+      await reg.inputReg("CY 233-555");
+      await reg.inputReg("CL 123-456");
+      // reg.inputReg("CEY 123-213");
+      console.log(await reg.inputReg("CA 123-123"));
+      console.log(await reg.inputReg("CY 098-765"));
+      console.log(await reg.inputReg("CL 123-456"));
 
-        console.log(await reg.inputReg('CA 123-123'));
-        // let count = await reg.greetCounter();
-        assert.equal("CA", await reg.regMap());
-
+      assert.deepEqual([
+        { registration_num: 'CY 098-765' },
+        { registration_num: 'CY 233-555' }
+      ], await reg.forFiltering("CY"));
     });
 
+    beforeEach(async function(){
+        // clean the tables before each test run
+        await pool.query("delete from reg_nums;");
+    });
 
+    it('should return the Filtered Cape Town Registration Numbers', async function(){
 
+      await reg.inputReg("CA 123-123");
+      await reg.inputReg("CA 098-765");
+      await reg.inputReg("CA 233-555");
+      await reg.inputReg("CEY 123-456");
+
+      assert.deepEqual([
+        { registration_num: 'CA 123-123' },
+        { registration_num: 'CA 098-765' },
+        { registration_num: 'CA 233-555' }], await reg.forFiltering("CA"));
+    });
+
+    beforeEach(async function(){
+        // clean the tables before each test run
+        await pool.query("delete from reg_nums;");
+    });
+    it('should return the Filtered Cape Town Registration Numbers', async function(){
+
+      await reg.inputReg("CL 123-123");
+      await reg.inputReg("CA 098-765");
+      await reg.inputReg("CL 233-555");
+      await reg.inputReg("CEY 123-456");
+
+      assert.deepEqual([
+        { registration_num: 'CL 123-123' },
+        { registration_num: 'CL 233-555' }], await reg.forFiltering("CL"));
+    });
 
     after(function(){
         pool.end();

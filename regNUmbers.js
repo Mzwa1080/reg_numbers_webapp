@@ -6,13 +6,13 @@ module.exports = function(pool) {
       return "Enter registration number once!";
     }
 
-    regNumber = regNumber.toUpperCase().trim();
+    regNumber = regNumber.toUpperCase();
 
     let tag = regNumber.substring(0, 3).trim();
 
     // check if this is a valid town
-    console.log(regNumber);
-    console.log(tag);
+    // console.log(regNumber);
+     // console.log(`tag: "${tag}"`);
     let foundTown = await pool.query("select id from towns where town_tag=$1", [tag]);
 
     if (foundTown.rows.length === 0) {
@@ -27,7 +27,7 @@ module.exports = function(pool) {
           await pool.query('insert into reg_nums(towns_id,registration_num) values($1,$2)', [foundTown.rows[0].id, regNumber]);
       }
     }
-
+    return "Test Arrived Here!"
 
   }
 
