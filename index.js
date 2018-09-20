@@ -96,7 +96,6 @@ app.get('/reg_numbers/reset', async function(req, res, next) {
   } catch (err) {
     next(err);
   }
-
 });
 
 let PORT = process.env.PORT || 3030;

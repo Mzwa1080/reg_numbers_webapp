@@ -79,6 +79,7 @@ describe('The Registration Number Web App', async function(){
         { registration_num: 'CA 098-765' },
         { registration_num: 'CA 233-555' }], await reg.forFiltering("CA"));
     });
+    
 
     beforeEach(async function(){
         // clean the tables before each test run
