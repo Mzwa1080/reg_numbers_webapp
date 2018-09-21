@@ -2,33 +2,32 @@ module.exports = function(pool) {
 
   async function inputReg(regNumber) {
     // entry validation
-    if (!regNumber || regNumber == "") {
-      return "Enter registration number once!";
-    }
+    // if (!regNumber || regNumber == "") {
+    //   // return "Enter registration number once!";
+    // }
 
     regNumber = regNumber.toUpperCase();
 
     let tag = regNumber.substring(0, 3).trim();
 
     // check if this is a valid town
-    // console.log(regNumber);
-     // console.log(`tag: "${tag}"`);
     let foundTown = await pool.query("select id from towns where town_tag=$1", [tag]);
-
-    if (foundTown.rows.length === 0) {
-      return "Town does not exist!";
-    }
-
-    else{
-// ----check if reg_nums table HAS existing registration numbers on reg_nums-----
+    //If the FOUNDTOWN variable HAS 0-1 REGISTRATION == (tag) CHECK IT IF IT EXISTS && INSERT IT
+    if (foundTown.rows.length === 1) {
+      // ----check if reg_nums table HAS existing registration numbers on reg_nums-----
       let getReg = await pool.query('select * from reg_nums where registration_num=$1', [regNumber]);
-// --- THEN INSERT TO REG_NUMBER TABLE IF THE GETREG IS EMPTY && CONTAINS
+      // console.log(getReg);
+      // --- THEN INSERT TO REG_NUMBER TABLE IF THE GETREG IS EMPTY && CONTAINS
       if (getReg.rows.length === 0) {
-          await pool.query('insert into reg_nums(towns_id,registration_num) values($1,$2)', [foundTown.rows[0].id, regNumber]);
+        await pool.query('insert into reg_nums(towns_id,registration_num) values($1,$2)', [foundTown.rows[0].id, regNumber]);
+      } else if (getReg.rowCount > 0) {
+        // console.log(getReg.rowCount, "IKhona/Exists/Added");
+        // console.log("Reached this part & error should display");
+        return "Please enter a new registration number! ";
       }
+    } else {
+      return "That registration number doesn\'t exist in the Towns!"
     }
-    return "Test Arrived Here!"
-
   }
 
   async function regMap() {
@@ -51,7 +50,7 @@ module.exports = function(pool) {
   }
 
   async function reset() {
-    console.log("clear is found");
+    // console.log("clear is found");
 
     await pool.query("delete from reg_nums");
     // return clear.rowCount;

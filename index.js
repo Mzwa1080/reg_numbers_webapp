@@ -7,6 +7,7 @@ const pg = require("pg");
 const Pool = pg.Pool;
 
 let regNumber = require('./regNUmbers');
+let routes = require('./routes');
 // let Routes = require('./routes')
 let app = express();
 
@@ -45,58 +46,14 @@ const pool = new Pool({
 });
 
 let regNumberInstance = regNumber(pool);
+let myExistingRoutes = routes(regNumberInstance);
 
-app.get('/', async function(req, res, next) {
-  try {
-    // let displayRegs = await regNumberInstance.regMap();
-    res.render('reg', {
-      regDisplay: await regNumberInstance.regMap()
-    });
+app.get('/', myExistingRoutes.home);
 
-  } catch (err) {
-    next(err);
-  }
+app.post('/reg_numbers', myExistingRoutes.regNumberSetup);
+app.get('/:towns', myExistingRoutes.filter);
 
-});
-
-app.post('/reg_numbers', async function(req, res, next) {
-  try {
-    let textInput = req.body.text;
-    await regNumberInstance.inputReg(textInput);
-
-    if (textInput == "" || textInput == undefined) {
-      req.flash("info", "Please insert a valid registration once!");
-    }
-    res.redirect('/');
-
-  } catch (err) {
-    next(err);
-  }
-
-});
-app.get('/:towns', async function(req, res, next) {
-  try {
-
-    let town = req.params.towns;
-    // console.log(town);
-    res.render('reg', {
-      regDisplay: await regNumberInstance.forFiltering(town)
-    })
-
-  } catch (err) {
-    next(err);
-  }
-});
-
-app.get('/reg_numbers/reset', async function(req, res, next) {
-  try {
-    await regNumberInstance.reset();
-    res.redirect('/');
-
-  } catch (err) {
-    next(err);
-  }
-});
+app.get('/reg_numbers/reset', myExistingRoutes.resetBtn);
 
 let PORT = process.env.PORT || 3030;
 app.listen(PORT, function() {
