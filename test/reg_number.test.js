@@ -11,10 +11,12 @@ const pool = new Pool({
 });
 
 describe('The Registration Number Web App', async function(){
+  // ------ MY ONLY INSTANCE -----
     const reg = Reg_number(pool);
 
     it('should pass if there\'s no registration number in the registration_num column/map', async function(){
         // the Factory Function is called Reg_number;
+        console.log(await reg.inputReg('Found'));
         assert.equal("Enter registration number once!",  await reg.inputReg());
     });
 
@@ -31,7 +33,8 @@ describe('The Registration Number Web App', async function(){
         await reg.inputReg('CL 992-992');
 
         // console.log(await reg.inputReg('CA 123-123'));
-        assert.deepEqual(await reg.regMap(), [
+        assert.deepEqual(await reg.regMap(),
+        [
               {"registration_num": "CA 123-123"},
               {"registration_num": "CY 223-223"},
               {"registration_num": "CEY 231-231"},
@@ -79,7 +82,7 @@ describe('The Registration Number Web App', async function(){
         { registration_num: 'CA 098-765' },
         { registration_num: 'CA 233-555' }], await reg.forFiltering("CA"));
     });
-    
+
 
     beforeEach(async function(){
         // clean the tables before each test run

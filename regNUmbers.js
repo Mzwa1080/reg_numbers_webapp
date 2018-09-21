@@ -2,9 +2,9 @@ module.exports = function(pool) {
 
   async function inputReg(regNumber) {
     // entry validation
-    // if (!regNumber || regNumber == "") {
-    //   // return "Enter registration number once!";
-    // }
+    if (!regNumber || regNumber == "") {
+      return "Enter registration number once!";
+    }
 
     regNumber = regNumber.toUpperCase();
 
