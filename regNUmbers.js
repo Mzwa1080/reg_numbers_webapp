@@ -23,7 +23,7 @@ module.exports = function(pool) {
       } else if (getReg.rowCount > 0) {
         // console.log(getReg.rowCount, "IKhona/Exists/Added");
         // console.log("Reached this part & error should display");
-        return "You've entered an existing number plate, pleace enter a new one";
+        return "You've entered an existing number plate, please enter a new one";
       }
     } else {
       return "Please enter an existing number plate looking from the dropdown button!"
