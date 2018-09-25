@@ -1,6 +1,6 @@
 module.exports = function(pool) {
 
-  async function inputReg(regNumber) {
+  async function InputReg(regNumber) {
     // entry validation
     if (!regNumber || regNumber == "") {
       return "Enter registration number once!";
@@ -23,19 +23,19 @@ module.exports = function(pool) {
       } else if (getReg.rowCount > 0) {
         // console.log(getReg.rowCount, "IKhona/Exists/Added");
         // console.log("Reached this part & error should display");
-        return "Please enter a new registration number! ";
+        return "You've entered an existing number plate, pleace enter a new one";
       }
     } else {
-      return "That registration number doesn\'t exist in the Towns!"
+      return "Please enter an existing number plate looking from the dropdown button!"
     }
   }
 
-  async function regMap() {
+  async function RegMap() {
     let allRegs = await pool.query("select registration_num from reg_nums");
     return allRegs.rows;
   }
 
-  async function forFiltering(tag) {
+  async function ForFiltering(tag) {
     let result = {};
 
     if (tag == "All") {
@@ -49,7 +49,7 @@ module.exports = function(pool) {
 
   }
 
-  async function reset() {
+  async function Reset() {
     // console.log("clear is found");
 
     await pool.query("delete from reg_nums");
@@ -58,9 +58,9 @@ module.exports = function(pool) {
   }
 
   return {
-    inputReg,
-    regMap,
-    reset,
-    forFiltering
+    InputReg,
+    RegMap,
+    Reset,
+    ForFiltering
   }
 }

@@ -55,7 +55,7 @@ app.get('/:towns', myExistingRoutes.filter);
 
 app.get('/reg_numbers/reset', myExistingRoutes.resetBtn);
 
-let PORT = process.env.PORT || 3030;
+let PORT = process.env.PORT || 3080;
 app.listen(PORT, function() {
   console.log('App starting on port', PORT);
 });
