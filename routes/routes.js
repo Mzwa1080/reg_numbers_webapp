@@ -29,7 +29,7 @@ module.exports = function(myRoutes){
      }
 
 
-     // console.log( await myRoutes.InputReg(textInput));
+     console.log( await myRoutes.InputReg(textInput));
      // if (textInput == "" || textInput == undefined) {
      //   req.flash('errorDisplay', "Please enter a new number plate once!");
      // }

@@ -6,8 +6,8 @@ let session = require('express-session');
 const pg = require("pg");
 const Pool = pg.Pool;
 
-let RegNumber = require('./regNUmbers');
-let Routes = require('./routes');
+let RegNumber = require('./public/js/regNUmbers.js');
+let Routes = require('./routes/routes.js');
 // let Routes = require('./routes')
 let app = express();
 

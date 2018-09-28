@@ -1,2 +1,4 @@
 node_modules/
-registration_numbers_webapp/
+test/
+views/
+public/
