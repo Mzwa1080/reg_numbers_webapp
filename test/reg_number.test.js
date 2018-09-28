@@ -16,7 +16,7 @@ describe('The Registration Number Web App', async function(){
 
     it('should pass if there\'s no registration number in the registration_num column/map', async function(){
         // the Factory Function is called Reg_number;
-        console.log(await reg.InputReg('Found'));
+        // console.log(await reg.InputReg('Found'));
         assert.equal("Enter registration number once!",  await reg.InputReg());
     });
 
@@ -55,9 +55,9 @@ describe('The Registration Number Web App', async function(){
       await reg.InputReg("CY 233-555");
       await reg.InputReg("CL 123-456");
       // reg.InputReg("CEY 123-213");
-      console.log(await reg.InputReg("CA 123-123"));
-      console.log(await reg.InputReg("CY 098-765"));
-      console.log(await reg.InputReg("CL 123-456"));
+      // console.log(await reg.InputReg("CA 123-123"));
+      // console.log(await reg.InputReg("CY 098-765"));
+      // console.log(await reg.InputReg("CL 123-456"));
 
       assert.deepEqual([
         { registration_num: 'CY 098-765' },

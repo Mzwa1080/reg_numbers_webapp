@@ -8,8 +8,12 @@ module.exports = function(pool) {
 
     regNumber = regNumber.toUpperCase();
 
-    let tag = regNumber.substring(0, 3).trim();
+    let tag = regNumber.split(" ",1).toString();
+    if(tag > 1){
+      return "Not existing";
+    }
 
+    console.log(tag);
     // check if this is a valid town
     let foundTown = await pool.query("select id from towns where town_tag=$1", [tag]);
     //If the FOUNDTOWN variable HAS 0-1 REGISTRATION == (tag) CHECK IT IF IT EXISTS && INSERT IT
@@ -23,10 +27,10 @@ module.exports = function(pool) {
       } else if (getReg.rowCount > 0) {
         // console.log(getReg.rowCount, "IKhona/Exists/Added");
         // console.log("Reached this part & error should display");
-        return "You've entered an existing number plate, please enter a new one";
+        return "You've entered an existing number plate, please enter a new one!";
       }
     } else {
-      return "Please enter an existing number plate looking from the dropdown button!"
+      return "Please enter a registration number from the following towns \"CA\",\"CL\",\"CEY\",\"CJ\"/\"CY\""
     }
   }
 
@@ -51,7 +55,6 @@ module.exports = function(pool) {
 
   async function Reset() {
     // console.log("clear is found");
-
     await pool.query("delete from reg_nums");
     // return clear.rowCount;
     // console.log(clear.rowCount);
