@@ -1,5 +1,5 @@
 const assert = require('assert');
-const Reg_number = require('../public/js/regNUmbers.js');
+const Reg_number = require('./public/js/regNUmbers.js');
 const pg = require("pg");
 const Pool = pg.Pool;
 
