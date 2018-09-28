@@ -16,8 +16,8 @@ describe('The Registration Number Web App', async function(){
 
     it('should pass if there\'s no registration number in the registration_num column/map', async function(){
         // the Factory Function is called Reg_number;
-        console.log(await reg.inputReg('Found'));
-        assert.equal("Enter registration number once!",  await reg.inputReg());
+        console.log(await reg.InputReg('Found'));
+        assert.equal("Enter registration number once!",  await reg.InputReg());
     });
 
     beforeEach(async function(){
@@ -27,13 +27,13 @@ describe('The Registration Number Web App', async function(){
 
     it('should RETURN ALL registration numbers in the reg_numbers database', async function(){
 
-        await reg.inputReg('CA 123-123');
-        await reg.inputReg('CY 223-223');
-        await reg.inputReg('CEY 231-231');
-        await reg.inputReg('CL 992-992');
+        await reg.InputReg('CA 123-123');
+        await reg.InputReg('CY 223-223');
+        await reg.InputReg('CEY 231-231');
+        await reg.InputReg('CL 992-992');
 
-        // console.log(await reg.inputReg('CA 123-123'));
-        assert.deepEqual(await reg.regMap(),
+        // console.log(await reg.InputReg('CA 123-123'));
+        assert.deepEqual(await reg.RegMap(),
         [
               {"registration_num": "CA 123-123"},
               {"registration_num": "CY 223-223"},
@@ -50,19 +50,19 @@ describe('The Registration Number Web App', async function(){
 
     it('should return the Filtered Bellville Registration Numbers', async function(){
 
-      await reg.inputReg("CA 123-123");
-      await reg.inputReg("CY 098-765");
-      await reg.inputReg("CY 233-555");
-      await reg.inputReg("CL 123-456");
-      // reg.inputReg("CEY 123-213");
-      console.log(await reg.inputReg("CA 123-123"));
-      console.log(await reg.inputReg("CY 098-765"));
-      console.log(await reg.inputReg("CL 123-456"));
+      await reg.InputReg("CA 123-123");
+      await reg.InputReg("CY 098-765");
+      await reg.InputReg("CY 233-555");
+      await reg.InputReg("CL 123-456");
+      // reg.InputReg("CEY 123-213");
+      console.log(await reg.InputReg("CA 123-123"));
+      console.log(await reg.InputReg("CY 098-765"));
+      console.log(await reg.InputReg("CL 123-456"));
 
       assert.deepEqual([
         { registration_num: 'CY 098-765' },
         { registration_num: 'CY 233-555' }
-      ], await reg.forFiltering("CY"));
+      ], await reg.ForFiltering("CY"));
     });
 
     beforeEach(async function(){
@@ -72,15 +72,15 @@ describe('The Registration Number Web App', async function(){
 
     it('should return the Filtered Cape Town Registration Numbers', async function(){
 
-      await reg.inputReg("CA 123-123");
-      await reg.inputReg("CA 098-765");
-      await reg.inputReg("CA 233-555");
-      await reg.inputReg("CEY 123-456");
+      await reg.InputReg("CA 123-123");
+      await reg.InputReg("CA 098-765");
+      await reg.InputReg("CA 233-555");
+      await reg.InputReg("CEY 123-456");
 
       assert.deepEqual([
         { registration_num: 'CA 123-123' },
         { registration_num: 'CA 098-765' },
-        { registration_num: 'CA 233-555' }], await reg.forFiltering("CA"));
+        { registration_num: 'CA 233-555' }], await reg.ForFiltering("CA"));
     });
 
 
@@ -90,14 +90,14 @@ describe('The Registration Number Web App', async function(){
     });
     it('should return the Filtered Cape Town Registration Numbers', async function(){
 
-      await reg.inputReg("CL 123-123");
-      await reg.inputReg("CA 098-765");
-      await reg.inputReg("CL 233-555");
-      await reg.inputReg("CEY 123-456");
+      await reg.InputReg("CL 123-123");
+      await reg.InputReg("CA 098-765");
+      await reg.InputReg("CL 233-555");
+      await reg.InputReg("CEY 123-456");
 
       assert.deepEqual([
         { registration_num: 'CL 123-123' },
-        { registration_num: 'CL 233-555' }], await reg.forFiltering("CL"));
+        { registration_num: 'CL 233-555' }], await reg.ForFiltering("CL"));
     });
 
     after(function(){
