@@ -6,8 +6,8 @@ let session = require('express-session');
 const pg = require("pg");
 const Pool = pg.Pool;
 
-let regNumber = require('./regNUmbers');
-let routes = require('./routes');
+let RegNumber = require('./regNUmbers');
+let Routes = require('./routes');
 // let Routes = require('./routes')
 let app = express();
 
@@ -45,15 +45,15 @@ const pool = new Pool({
   ssl: useSSL
 });
 
-let regNumberInstance = regNumber(pool);
-let myExistingRoutes = routes(regNumberInstance);
+let RegNumberInstance = RegNumber(pool);
+let MyExistingRoutes = Routes(RegNumberInstance);
 
-app.get('/', myExistingRoutes.home);
+app.get('/', MyExistingRoutes.home);
 
-app.post('/reg_numbers', myExistingRoutes.regNumberSetup);
-app.get('/:towns', myExistingRoutes.filter);
+app.post('/reg_numbers', MyExistingRoutes.regNumberSetup);
+app.get('/:towns', MyExistingRoutes.filter);
 
-app.get('/reg_numbers/reset', myExistingRoutes.resetBtn);
+app.get('/reg_numbers/reset', MyExistingRoutes.resetBtn);
 
 let PORT = process.env.PORT || 3080;
 app.listen(PORT, function() {
