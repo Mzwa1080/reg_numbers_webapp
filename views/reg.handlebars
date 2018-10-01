@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 
-<body>
+<body class=" lime lighten-3">
 
-  <div class="container">
+  <div class="container  ">
     <div class="row">
       <div class="col-12">
         <h3 class="center">Registration numbers</h3>
@@ -26,10 +26,13 @@
 
 <div class="center">
   <button class="waves-effect waves-light btn center col s6  btnWidth" type="submit" name="add">Add</button>
-  <a href="/reg_numbers/reset" class="waves-effect waves-light btn  center  btnWidth" type="" name="reset">Reset</a>
+
+
+
+  <a href="/reg_numbers/reset" class="waves-effect red darken-2 btn  center  btnWidth" type="" name="reset">Reset</a>
 </div>
 
-<br>
+
 <br>
 <br>
 
@@ -40,7 +43,7 @@
             <h6 class="col s4 center">Select your Town</h6>
             <a class='dropdown-trigger btn right col s6' href='' data-target='dropdown1' enable selected>All Towns</a>
 
-            <ul id='dropdown1' class='dropdown-content' >
+            <ul id='dropdown1' class='dropdown-content lime lighten-3' >
               <li><a href="/All">All Towns</a></li>
               <li><a href="/CA ">Cape Town</a></li>
               <li><a href="/CL">Stellenbosch</a></li>
@@ -76,8 +79,6 @@
         <h5 href="/flash" name="flash" class="error">{{messages.error2}}</h5>
       </div>
     {{/if}}
-  </div>
-
   </div>
 
 </body>
