@@ -7,11 +7,16 @@ module.exports = function(pool) {
     }
 
     regNumber = regNumber.toUpperCase();
+    // var regEx = /[CA 0-9]*/g;
 
-    let tag = regNumber.split(" ",1).join('-');
+    let tag = regNumber.split(" ",1).join();
+    // console.log(convert);
+    // let tag = regNumber.match(regEx).toString( );
+
+    // console.log(tag, "Arrived");
 
 
-    console.log(tag);
+    // console.log(tag);
     // check if this is a valid town
     let foundTown = await pool.query("select id from towns where town_tag=$1", [tag]);
     //If the FOUNDTOWN variable HAS 0-1 REGISTRATION == (tag) CHECK IT IF IT EXISTS && INSERT IT
@@ -28,7 +33,7 @@ module.exports = function(pool) {
         return "You've entered an existing number plate, please enter a new one!";
       }
     } else {
-      return "Please enter a registration number from the following towns \"CA\",\"CL\",\"CEY\",\"CJ\"/\"CY\""
+     return "Please enter a registration number from the following towns \"CA\",\"CL\",\"CEY\",\"CJ\"/\"CY\""
     }
   }
 

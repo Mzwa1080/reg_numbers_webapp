@@ -15,7 +15,7 @@
 
         <div class="col s12 ofText">
           Enter registration number:
-          <input class="textInput col 12" type="text" name="text" value="" placeholder="eg. CA 465-647" maxlength="11">
+          <input class="textInput col 12" type="text" name="text" value="" placeholder="eg. CA 465-647" pattern='[A-Z]{2,3}\s\d{3}\W\d{3}|[A-Z]{2,3}\s\d{2,3}' title="Example: CA 123-345">
 
           <br>
         </div>
